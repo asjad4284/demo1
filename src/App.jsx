@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import TrustBadges from './components/TrustBadges';
 import Inventory from './components/Inventory';
 import Testimonials from './components/Testimonials';
 import DirectContact from './components/DirectContact';
@@ -27,11 +26,6 @@ export default function App() {
       <main className="flex-1">
         <Hero
           onOpenManagerCall={() => setManagerCallOpen(true)}
-          onOpenTradeIn={() => setTradeInOpen(true)}
-        />
-
-        {/* Trust Badges (3-Column Grid) */}
-        <TrustBadges
           onOpenTradeIn={() => setTradeInOpen(true)}
         />
 

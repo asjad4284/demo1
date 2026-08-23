@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
 import { X, Repeat2, ArrowRight, Phone, MessageSquare, CheckCircle2 } from 'lucide-react';
-import { showroomInfo } from '../data/cars';
-
-const MODELS = [
-  'Toyota Land Cruiser 300 ZX',
-  'Mercedes-Benz S-Class S580',
-  'Audi RS e-tron GT',
-  'Porsche Cayenne GTS Coupe',
-  'BMW 7-Series 740Li',
-  'Lexus LX600 VIP',
-];
+import { showroom, inventoryCars, createWhatsAppUrl } from '../config';
 
 export default function TradeInModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
-  const [form, setForm] = useState({ car: '', year: '2021', mileage: '', target: MODELS[0], phone: '' });
+  const [form, setForm] = useState({
+    car: '',
+    year: '2021',
+    mileage: '',
+    target: inventoryCars[0]?.title || 'Showroom Fleet Vehicle',
+    phone: ''
+  });
   const [done, setDone] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setDone(true);
-    const text = `*Trade-In Request*\nCurrent Car: ${form.car} (${form.year})\nMileage: ${form.mileage || '—'}\nDesired: ${form.target}\nPhone: ${form.phone}`;
-    setTimeout(() => window.open(`https://wa.me/${showroomInfo.whatsappNumberRaw}?text=${encodeURIComponent(text)}`, '_blank'), 600);
+    const waUrl = createWhatsAppUrl('trade-in', form);
+    setTimeout(() => window.open(waUrl, '_blank'), 400);
   };
 
   return (
@@ -46,35 +43,46 @@ export default function TradeInModal({ isOpen, onClose }) {
           </div>
           <div>
             <h3 className="text-base font-semibold text-stone-100">Instant Car Exchange</h3>
-            <p className="text-xs text-stone-500">Fair spot-valuation · 45-min settlement</p>
+            <p className="text-xs text-stone-500">Fair spot-valuation · {showroom.exchangeTime} settlement</p>
           </div>
         </div>
 
         {!done ? (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">Your Current Car</label>
+              <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">
+                Your Current Car (Make & Model)
+              </label>
               <input
-                type="text" required
-                placeholder="e.g. Toyota Prado TX 2020"
+                type="text"
+                required
+                placeholder="e.g. Toyota Prado TX / Fortuner Legender"
                 value={form.car}
                 onChange={(e) => setForm({ ...form, car: e.target.value })}
                 className="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-white/[0.07] text-stone-100 placeholder-stone-700 focus:outline-none focus:border-yellow-800/50 text-sm transition-colors"
               />
             </div>
+
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">Year</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">
+                  Model Year
+                </label>
                 <select
                   value={form.year}
                   onChange={(e) => setForm({ ...form, year: e.target.value })}
                   className="w-full px-3 py-2.5 rounded-lg bg-slate-950 border border-white/[0.07] text-stone-200 focus:outline-none focus:border-yellow-800/50 text-sm transition-colors"
                 >
-                  {[2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].map(y => <option key={y}>{y}</option>)}
+                  {[2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013].map((y) => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
                 </select>
               </div>
+
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">Mileage</label>
+                <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">
+                  Approx. Mileage
+                </label>
                 <input
                   type="text"
                   placeholder="e.g. 45,000 km"
@@ -84,42 +92,70 @@ export default function TradeInModal({ isOpen, onClose }) {
                 />
               </div>
             </div>
+
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">Desired Upgrade</label>
+              <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">
+                Desired Upgrade From Showroom
+              </label>
               <select
                 value={form.target}
                 onChange={(e) => setForm({ ...form, target: e.target.value })}
                 className="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-white/[0.07] text-stone-200 focus:outline-none focus:border-yellow-800/50 text-sm transition-colors"
               >
-                {MODELS.map(m => <option key={m}>{m}</option>)}
+                {inventoryCars.map((c) => (
+                  <option key={c.id} value={`${c.title} (${c.price})`}>
+                    {c.title} — {c.price}
+                  </option>
+                ))}
               </select>
             </div>
+
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">Your Phone</label>
+              <label className="block text-[11px] font-semibold uppercase tracking-wider text-stone-500 mb-1.5">
+                Your Contact Phone
+              </label>
               <input
-                type="tel" required
-                placeholder="0300 0000000"
+                type="tel"
+                required
+                placeholder="e.g. 0300 1234567"
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-white/[0.07] text-stone-100 placeholder-stone-700 focus:outline-none focus:border-yellow-800/50 text-sm transition-colors"
               />
             </div>
-            <button type="submit" className="btn-primary w-full py-3.5 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-center gap-2 mt-1">
-              Get Exchange Estimate
+
+            <button
+              type="submit"
+              className="btn-primary w-full py-3.5 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-center gap-2 mt-1"
+            >
+              Get Instant Spot Valuation
               <ArrowRight className="w-4 h-4" strokeWidth={1.75} />
             </button>
           </form>
         ) : (
-          <div className="py-10 text-center space-y-4">
+          <div className="py-8 text-center space-y-4">
             <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" strokeWidth={1.5} />
-            <p className="text-sm text-stone-300">Opening WhatsApp with your trade-in details…</p>
-            <a
-              href={`tel:${showroomInfo.managerPhoneRaw}`}
-              className="btn-ghost-gold inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
-            >
-              <Phone className="w-4 h-4" strokeWidth={1.75} />
-              Call Directly Instead
-            </a>
+            <h4 className="text-base font-semibold text-stone-100">Trade-In Request Ready</h4>
+            <p className="text-xs text-stone-400 max-w-sm mx-auto">
+              Connecting with {showroom.managerName} on WhatsApp for your estimated spot valuation…
+            </p>
+            <div className="flex flex-col gap-2 pt-2">
+              <a
+                href={createWhatsAppUrl('trade-in', form)}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold shadow-md transition-colors"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                Launch WhatsApp Chat
+              </a>
+              <a
+                href={`tel:${showroom.managerPhoneRaw}`}
+                className="btn-ghost-gold inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold"
+              >
+                <Phone className="w-3.5 h-3.5" strokeWidth={1.75} />
+                Call {showroom.managerName}
+              </a>
+            </div>
           </div>
         )}
       </div>

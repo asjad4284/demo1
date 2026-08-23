@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Phone, MessageSquare, CheckCircle, FileCheck } from 'lucide-react';
-import { showroomInfo } from '../data/cars';
+import { showroom, createWhatsAppUrl } from '../config';
 
 export default function CarDetailModal({ car, onClose, onOpenManagerCall }) {
   if (!car) return null;
@@ -79,7 +79,7 @@ export default function CarDetailModal({ car, onClose, onOpenManagerCall }) {
           {/* Actions */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-5 border-t border-white/[0.04]">
             <a
-              href={`https://wa.me/${showroomInfo.whatsappNumberRaw}?text=${encodeURIComponent(`Hello, I'm interested in the ${car.title} (${car.price}). Please share the inspection report.`)}`}
+              href={createWhatsAppUrl('inspection-request', car)}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-950 border border-emerald-800/40 text-emerald-400 hover:bg-emerald-900 text-sm font-semibold transition-colors"
             >
@@ -91,7 +91,7 @@ export default function CarDetailModal({ car, onClose, onOpenManagerCall }) {
               className="btn-primary flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold"
             >
               <Phone className="w-4 h-4" strokeWidth={1.75} />
-              Call Showroom Manager
+              Call {showroom.managerName}
             </button>
           </div>
         </div>

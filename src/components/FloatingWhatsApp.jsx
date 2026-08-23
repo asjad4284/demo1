@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { MessageSquare, X } from 'lucide-react';
-import { showroomInfo } from '../data/cars';
+import { createWhatsAppUrl } from '../config';
 
 export default function FloatingWhatsApp() {
   const [dismissed, setDismissed] = useState(false);
 
-  const url = `https://wa.me/${showroomInfo.whatsappNumberRaw}?text=${encodeURIComponent(
-    'Hello Malik Shaharyar, I am viewing the Multan Premier Motors showroom online and would like to inquire about your certified luxury inventory.'
-  )}`;
+  const url = createWhatsAppUrl('general');
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">

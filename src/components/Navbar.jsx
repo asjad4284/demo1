@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Menu, X, Car } from 'lucide-react';
-import { showroomInfo } from '../data/cars';
+import { showroom, createWhatsAppUrl } from '../config';
 
 export default function Navbar({ onOpenManagerCall, onOpenTradeIn }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,10 +37,10 @@ export default function Navbar({ onOpenManagerCall, onOpenTradeIn }) {
             </div>
             <div>
               <span className="text-base font-semibold tracking-wide text-stone-100">
-                Multan Premier
+                {showroom.shortName || showroom.name}
               </span>
               <span className="text-[10px] block text-stone-400 tracking-widest uppercase leading-none mt-0.5">
-                Motors
+                MOTORS
               </span>
             </div>
           </a>
@@ -111,10 +111,10 @@ export default function Navbar({ onOpenManagerCall, onOpenTradeIn }) {
                   className="btn-primary w-full py-3 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-center gap-2"
                 >
                   <Phone className="w-4 h-4" strokeWidth={1.75} />
-                  Call Showroom Manager
+                  Call {showroom.managerName}
                 </button>
                 <a
-                  href={`https://wa.me/${showroomInfo.whatsappNumberRaw}`}
+                  href={createWhatsAppUrl('general')}
                   target="_blank" rel="noopener noreferrer"
                   className="btn-ghost-gold w-full py-3 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-center gap-2"
                   onClick={() => setMobileMenuOpen(false)}

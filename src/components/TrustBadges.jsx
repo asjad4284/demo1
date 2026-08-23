@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Repeat2, Award, ArrowRight, Star } from 'lucide-react';
-import { trustBadgesData, showroomInfo } from '../data/cars';
+import { trustBadgesData, showroom } from '../config';
 
 const ICON_MAP = {
   ShieldCheck: <ShieldCheck className="w-5 h-5 text-yellow-700" strokeWidth={1.5} />,
@@ -17,7 +17,7 @@ export default function TrustBadges({ onOpenTradeIn }) {
         <div className="mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-[0.16em] uppercase text-yellow-700 mb-3">
-              Why Multan's Executive Class Chooses Us
+              Why {showroom.city}'s Executive Class Chooses Us
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-100 leading-snug">
               Uncompromising Standards
@@ -30,7 +30,7 @@ export default function TrustBadges({ onOpenTradeIn }) {
 
         {/* ── 3-Column Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
-          {trustBadgesData.map((item, idx) => (
+          {trustBadgesData.map((item) => (
             <div
               key={item.id}
               className="bg-slate-950 p-8 sm:p-10 flex flex-col gap-5 group hover:bg-slate-900/60 transition-colors duration-300"
@@ -67,14 +67,14 @@ export default function TrustBadges({ onOpenTradeIn }) {
               )}
               {item.id === 3 && (
                 <a
-                  href={showroomInfo.googleMapsUrl}
+                  href={showroom.googleMapsUrl}
                   target="_blank" rel="noopener noreferrer"
                   className="mt-auto flex items-center gap-1.5 text-xs font-semibold text-yellow-700 hover:text-yellow-600 transition-colors"
                 >
                   <div className="flex">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-yellow-700 text-yellow-700" />)}
                   </div>
-                  Read 380+ Google Reviews
+                  Read {showroom.reviewsCount}+ Google Reviews
                 </a>
               )}
             </div>
@@ -84,10 +84,10 @@ export default function TrustBadges({ onOpenTradeIn }) {
         {/* ── Metric Strip ── */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center pt-10 border-t border-white/[0.04]">
           {[
-            { value: '250+', label: 'Premium Cars Delivered' },
+            { value: `${showroom.vehiclesDelivered}`, label: 'Premium Cars Delivered' },
             { value: '100%', label: 'Clear Biometric Transfers' },
-            { value: '45 min', label: 'Spot Exchange Settlement' },
-            { value: '4.9 ★', label: 'Verified Google Rating' },
+            { value: `${showroom.exchangeTime}`, label: 'Spot Exchange Settlement' },
+            { value: `${showroom.rating} ★`, label: 'Verified Google Rating' },
           ].map((stat) => (
             <div key={stat.label}>
               <div className="text-2xl sm:text-3xl font-serif font-bold brushed-gold mb-1">

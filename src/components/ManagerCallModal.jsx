@@ -1,9 +1,17 @@
 import React from 'react';
 import { X, Phone, MessageSquare, CheckCircle } from 'lucide-react';
-import { showroomInfo } from '../data/cars';
+import { showroom, createWhatsAppUrl } from '../config';
 
 export default function ManagerCallModal({ isOpen, onClose }) {
   if (!isOpen) return null;
+
+  // Extract initials dynamically from managerName
+  const initials = showroom.managerName
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
     <div
@@ -25,14 +33,14 @@ export default function ManagerCallModal({ isOpen, onClose }) {
         {/* Avatar */}
         <div className="flex items-center gap-4 mb-7">
           <div className="w-14 h-14 rounded-xl bg-slate-800 border border-white/[0.06] flex items-center justify-center font-serif font-bold text-lg brushed-gold">
-            MS
+            {initials}
           </div>
           <div>
             <div className="text-xs font-semibold tracking-[0.14em] uppercase text-yellow-700 mb-1">
               Direct Manager Line
             </div>
-            <div className="text-base font-semibold text-stone-100">{showroomInfo.managerName}</div>
-            <div className="text-xs text-stone-500">{showroomInfo.managerTitle}</div>
+            <div className="text-base font-semibold text-stone-100">{showroom.managerName}</div>
+            <div className="text-xs text-stone-500">{showroom.managerTitle}</div>
           </div>
         </div>
 
@@ -53,14 +61,14 @@ export default function ManagerCallModal({ isOpen, onClose }) {
         {/* CTAs */}
         <div className="space-y-2.5">
           <a
-            href={`tel:${showroomInfo.managerPhoneRaw}`}
+            href={`tel:${showroom.managerPhoneRaw}`}
             className="btn-primary w-full py-3.5 rounded-xl text-sm font-semibold tracking-wide flex items-center justify-center gap-2"
           >
             <Phone className="w-4 h-4" strokeWidth={1.75} />
-            Dial {showroomInfo.managerPhone}
+            Dial {showroom.managerPhone}
           </a>
           <a
-            href={`https://wa.me/${showroomInfo.whatsappNumberRaw}?text=${encodeURIComponent('Hello Malik Shaharyar, I would like to discuss purchasing a vehicle from Multan Premier Motors.')}`}
+            href={createWhatsAppUrl('general')}
             target="_blank" rel="noopener noreferrer"
             className="w-full py-3 rounded-xl bg-emerald-950 border border-emerald-800/40 text-emerald-400 hover:bg-emerald-900 text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
           >

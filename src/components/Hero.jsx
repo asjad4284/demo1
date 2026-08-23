@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, ArrowRight, Check, MapPin } from 'lucide-react';
-import { showroomInfo } from '../data/cars';
+import { showroom } from '../config';
 
 export default function Hero({ onOpenManagerCall }) {
   return (
@@ -16,7 +16,7 @@ export default function Hero({ onOpenManagerCall }) {
         <img
           src="/hero-car.jpg"
           alt="Executive Luxury SUV"
-          className="w-full h-full object-cover object-center scale-[1.04] brightness-105 contrast-110 saturate-[0.88]"
+          className="w-full h-full object-cover object-[center_30%] scale-[1.04] brightness-105 contrast-110 saturate-[0.88]"
         />
 
         {/* Atmosphere: deepen the forest mood with a dark teal-green color wash */}
@@ -47,26 +47,23 @@ export default function Hero({ onOpenManagerCall }) {
           {/* ── Eyebrow ── */}
           <p className="text-[11px] font-bold tracking-[0.22em] uppercase text-stone-400 mb-8 flex items-center gap-2">
             <span className="w-6 h-px bg-yellow-700/60 inline-block"></span>
-            South Punjab's Finest · Bosan Road, Multan
+            {showroom.regionTag}
           </p>
 
           {/* ── Headline ── */}
           <h1
-            className="font-serif font-extrabold leading-[1.06] tracking-tight mb-7"
+            className="font-serif font-extrabold leading-[1.08] tracking-tight mb-7 text-stone-50"
             style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)' }}
           >
-            <span className="block text-stone-50">Multan's</span>
-            {/*
-              "Premier" — metallic animated gold + bloom halo.
-              data-text mirrors the visible text for the ::after pseudo bloom.
-            */}
+            <span>{showroom.city}'s </span>
             <span
-              className="gold-bloom-wrap metallic-gold"
+              className="gold-bloom-wrap metallic-gold inline-block"
               data-text="Premier"
             >
               Premier
             </span>
-            <span className="block text-stone-50"> Auto Dealership</span>
+            <br />
+            <span>Auto Dealership</span>
           </h1>
 
           {/* ── Subheadline ── */}
@@ -80,7 +77,7 @@ export default function Hero({ onOpenManagerCall }) {
             {[
               '100% Genuine Auction Sheet Verified',
               'Instant Biometric Ownership Transfer',
-              'Spot Cash Trade-In · 45-Minute Settlement',
+              `Spot Cash Trade-In · ${showroom.exchangeTime} Settlement`,
             ].map((point) => (
               <li key={point} className="flex items-center gap-3 text-sm text-stone-300 font-light">
                 <span className="flex-shrink-0 w-4 h-4 rounded-sm flex items-center justify-center"
@@ -118,21 +115,21 @@ export default function Hero({ onOpenManagerCall }) {
             </div>
             <div className="w-px h-3 bg-white/10"></div>
             <a
-              href={`tel:${showroomInfo.managerPhoneRaw}`}
+              href={`tel:${showroom.managerPhoneRaw}`}
               className="text-[11px] text-stone-400 hover:text-stone-200 transition-colors font-medium"
             >
-              {showroomInfo.managerPhone}
+              {showroom.managerPhone}
             </a>
             <div className="w-px h-3 bg-white/10"></div>
-            <span className="text-[11px] text-stone-500">{showroomInfo.managerName}</span>
+            <span className="text-[11px] text-stone-500">{showroom.managerName}</span>
             <div className="w-px h-3 bg-white/10 hidden sm:block"></div>
             <a
-              href={showroomInfo.googleMapsUrl}
+              href={showroom.googleMapsUrl}
               target="_blank" rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1 text-[11px] text-stone-500 hover:text-stone-300 transition-colors"
             >
               <MapPin className="w-3 h-3" strokeWidth={1.75} />
-              Bosan Road, Multan
+              {showroom.city}
             </a>
           </div>
 

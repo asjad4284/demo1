@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, MessageSquare, Gauge, Calendar, ChevronRight, Eye } from 'lucide-react';
-import { inventoryCars, showroomInfo } from '../data/cars';
+import { inventoryCars, showroom, createWhatsAppUrl } from '../config';
 
-const CATEGORIES = ['All', 'Luxury SUV', 'Executive Sedan', 'Electric Supercar'];
+const CATEGORIES = ['All', 'Luxury SUV', 'Executive Sedan', 'Family Sedan', 'Pickup / 4x4'];
 
 export default function Inventory({ onSelectCar, onOpenManagerCall }) {
   const [selected, setSelected] = useState('All');
@@ -103,8 +103,9 @@ export default function Inventory({ onSelectCar, onOpenManagerCall }) {
 
                 {/* Actions */}
                 <div className="mt-auto grid grid-cols-2 gap-2 pt-4 border-t border-white/[0.04]">
+                  {/* Contextual WhatsApp Link */}
                   <a
-                    href={`https://wa.me/${showroomInfo.whatsappNumberRaw}?text=${encodeURIComponent(`Hello, I am inquiring about the ${car.title} (${car.price}) at Multan Premier Motors.`)}`}
+                    href={createWhatsAppUrl('car-inquiry', car)}
                     target="_blank" rel="noopener noreferrer"
                     className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-emerald-950 border border-emerald-800/40 text-emerald-400 hover:bg-emerald-900 text-xs font-semibold transition-colors"
                   >
