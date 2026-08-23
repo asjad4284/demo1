@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-slate-950 text-stone-100;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ─── Brushed Gold (static, for supporting text) ────────────────── */
+.brushed-gold {
+  background: linear-gradient(135deg, #C9A84C 0%, #B8962E 40%, #A07820 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Metallic Gold (animated sweep, for hero headline word) ────── */
+.metallic-gold {
+  background: linear-gradient(
+    100deg,
+    #7A5C10 0%,
+    #C9A84C 22%,
+    #EDD97A 40%,
+    #F5E8A3 50%,
+    #EDD97A 60%,
+    #C9A84C 78%,
+    #7A5C10 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: metallic-sweep 5s ease-in-out infinite alternate;
+}
+
+@keyframes metallic-sweep {
+  0%   { background-position: 0% center; }
+  100% { background-position: 220% center; }
+}
+
+/* Bloom wrapper — wraps the gold word and adds a subtle glow halo */
+.gold-bloom-wrap {
+  position: relative;
+  display: inline-block;
+}
+.gold-bloom-wrap::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: blur(18px) brightness(1.8);
+  opacity: 0.28;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ─── Subtle Dividers ───────────────────────────────────────────── */
+.gold-rule {
+  border-color: rgba(184, 150, 46, 0.25);
+}
+
+/* ─── Surface Cards ─────────────────────────────────────────────── */
+.surface-card {
+  background: rgba(10, 14, 26, 0.76);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.052);
+}
+
+.surface-card-hover:hover {
+  border-color: rgba(184, 150, 46, 0.28);
+  background: rgba(18, 24, 40, 0.84);
+}
+
+/* ─── Primary CTA ────────────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(145deg, #063d2f 0%, #065f46 55%, #047857 100%);
+  border: 1px solid rgba(201, 168, 76, 0.48);
+  color: #DFC878;
+  letter-spacing: 0.025em;
+  transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(145deg, #065f46 0%, #047857 55%, #059669 100%);
+  border-color: rgba(201, 168, 76, 0.72);
+  box-shadow: 0 4px 24px rgba(6, 78, 59, 0.50), 0 0 0 1px rgba(201, 168, 76, 0.10);
+}
+
+/* ─── Secondary CTA (Ghost Gold) ────────────────────────────────── */
+.btn-ghost-gold {
+  background: transparent;
+  border: 1px solid rgba(184, 150, 46, 0.42);
+  color: #C9A84C;
+  letter-spacing: 0.025em;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.btn-ghost-gold:hover {
+  border-color: rgba(201, 168, 76, 0.78);
+  background: rgba(184, 150, 46, 0.07);
+  color: #DFC878;
+}
+
+/* ─── Nav Button ─────────────────────────────────────────────────── */
+.btn-nav-call {
+  background: transparent;
+  border: 1px solid rgba(184, 150, 46, 0.32);
+  color: #f5f5f4;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.btn-nav-call:hover {
+  border-color: rgba(184, 150, 46, 0.62);
+  color: #C9A84C;
+}
+
+/* ─── Inventory Card ─────────────────────────────────────────────── */
+.inventory-card {
+  background: linear-gradient(175deg, rgba(16, 22, 38, 0.82) 0%, rgba(9, 12, 22, 0.94) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.048);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.inventory-card:hover {
+  border-color: rgba(184, 150, 46, 0.28);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.40);
+}
